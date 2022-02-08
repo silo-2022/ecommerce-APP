@@ -1,4 +1,4 @@
-import '/Core/ViewModel/HomeViewModel.dart';
+import '/Core/ViewModel/Home_View_model.dart';
 import 'package:get/get.dart';
 import '/Core/ViewModel/Auth_View_Model.dart';
 import '/Core/ViewModel/control_view_model.dart';

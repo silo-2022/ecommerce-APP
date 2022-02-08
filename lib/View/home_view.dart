@@ -1,6 +1,6 @@
 
-import 'package:ecom/Core/ViewModel/HomeViewModel.dart';
-import '/Core/ViewModel/HomeViewModel.dart';
+
+import '/Core/ViewModel/Home_View_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,9 @@ final List<String> names =<String>[ "s", "s","s","s","s"];
   @override
   Widget build(BuildContext context){
     return GetBuilder<HomeViewModel>(
-     builder: (controller)=> Scaffold(
+     builder: (controller)=> controller.loading.value
+         ? Center(child: CircularProgressIndicator())
+         :Scaffold(
         body: Container(
 
           padding: EdgeInsets.only(top: 30, left: 20, right: 20),
@@ -50,6 +52,7 @@ final List<String> names =<String>[ "s", "s","s","s","s"];
 
 
       ),
+
     );
 
   }
