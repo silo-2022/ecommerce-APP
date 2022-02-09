@@ -1,5 +1,7 @@
 
 
+import 'package:ecom/View/detail_view.dart';
+
 import '/Core/ViewModel/Home_View_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,35 +19,38 @@ final List<String> names =<String>[ "s", "s","s","s","s"];
   @override
   Widget build(BuildContext context){
     return GetBuilder<HomeViewModel>(
+      init: Get.find(),
      builder: (controller)=> controller.loading.value
          ? Center(child: CircularProgressIndicator())
          :Scaffold(
-        body: Container(
+        body: SingleChildScrollView(
+          child: Container(
 
-          padding: EdgeInsets.only(top: 30, left: 20, right: 20),
-          child: Column(
-            children: [
-              _searchTextFormField(),
-              SizedBox(height: 30,),
-              CustomText(text: "Categories",),
-              SizedBox(height: 30,),
-              _ListViewCategory(),
-              SizedBox(height: 30,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            padding: EdgeInsets.only(top: 30, left: 20, right: 20),
+            child: Column(
+              children: [
+                _searchTextFormField(),
+                SizedBox(height: 30,),
+                CustomText(text: "Categories",),
+                SizedBox(height: 30,),
+                _ListViewCategory(),
+                SizedBox(height: 30,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-                  children:
+                    children:
 
-                  [
-                    CustomText(text: "Best Selling", fontsize: 18,),
-                    SizedBox(height: 10,),
-                    CustomText(text: "See All", fontsize: 16,),
-                  ]
-              ),
-             // SizedBox(height: 50,),
-              SizedBox(height: 18,),
-              _ListViewProduct(),
-            ],
+                    [
+                      CustomText(text: "Best Selling", fontsize: 18,),
+                      SizedBox(height: 10,),
+                      CustomText(text: "See All", fontsize: 16,),
+                    ]
+                ),
+               // SizedBox(height: 50,),
+                SizedBox(height: 18,),
+                _ListViewProduct(),
+              ],
+            ),
           ),
         ),
 
@@ -107,61 +112,68 @@ final List<String> names =<String>[ "s", "s","s","s","s"];
     );
  }
  Widget _ListViewProduct(){
-   return  Container(
+   return  GetBuilder<HomeViewModel>(
+     builder: (controller) => Container(
 
-     height: 230,
-     //color: Colors.pink,
-     child: ListView.separated(
-         itemCount: names.length,
-         scrollDirection: Axis.horizontal,
-         itemBuilder: (context, index){
-           return Container(
-             width: MediaQuery.of(context).size.width*.4,
-             child: Column(
-               children: [
-                 Container(
-                   decoration: BoxDecoration(
-                       borderRadius: BorderRadius.circular(50),
-                       color: Colors.grey.shade100
-                   ),
+       height: 230,
+       //color: Colors.pink,
+       child: ListView.separated(
+           itemCount: controller.productModel.length,
+           scrollDirection: Axis.horizontal,
+           itemBuilder: (context, index){
+             return GestureDetector(
+               onTap:(){ Get.to(DetailView(
+                 model: controller.productModel[index],
+               ));},
+               child: Container(
+                 width: MediaQuery.of(context).size.width*.4,
+                 child: Column(
+                   children: [
+                     Container(
+                       decoration: BoxDecoration(
+                           borderRadius: BorderRadius.circular(50),
+                           color: Colors.grey.shade100
+                       ),
 
-                   width: MediaQuery.of(context).size.width*.4,
-                   child:
-                   Padding(
-                     padding: const EdgeInsets.all(10.0),
-                     child: Column(
-                       mainAxisAlignment: MainAxisAlignment.center,
-                       children: [
-                         Container(
-                             width: MediaQuery.of(context).size.width*.4,
-                             height: 100,
-                             child: Image.asset("assets/3.png", fit: BoxFit.fill,)),
-                         Padding(
-                           padding: const EdgeInsets.only(left: 8.0),
-                           child: CustomText(text: "Watch", alignment: Alignment.bottomLeft,),
+                       width: MediaQuery.of(context).size.width*.4,
+                       child:
+                       Padding(
+                         padding: const EdgeInsets.all(4.0),
+                         child: Column(
+                           mainAxisAlignment: MainAxisAlignment.center,
+                           children: [
+                             Container(
+                                 width: MediaQuery.of(context).size.width*.4,
+                                 height: 100,
+                                 child: Image.network(controller.productModel[index].image, fit: BoxFit.fill,)),
+                             Padding(
+                               padding: const EdgeInsets.only(left: 8.0),
+                               child: CustomText(text: controller.productModel[index].name, alignment: Alignment.bottomLeft,maxLine: 1,),
+                             ),
+                            //SizedBox(height: 18),
+
+                             Padding(
+                               padding: const EdgeInsets.only(left: 8.0),
+                               child: CustomText(text: controller.productModel[index].description, alignment: Alignment.bottomLeft,color: Colors.grey,),
+                             ),
+                             //SizedBox(height: 10),
+                             Padding(
+                               padding: const EdgeInsets.only(left: 8.0),
+                               child: CustomText(text: controller.productModel[index].price+ "KD", alignment: Alignment.bottomLeft,color: primeryColor,),
+                             ),
+                           ],
                          ),
-                        SizedBox(height: 18),
-
-                         Padding(
-                           padding: const EdgeInsets.only(left: 8.0),
-                           child: CustomText(text: "Watch", alignment: Alignment.bottomLeft,color: Colors.grey,),
-                         ),
-                         SizedBox(height: 10),
-                         Padding(
-                           padding: const EdgeInsets.only(left: 8.0),
-                           child: CustomText(text: "25 K.D", alignment: Alignment.bottomLeft,color: primeryColor,),
-                         ),
-                       ],
-                     ),
-                   ),),
+                       ),),
 
 
-               ],
-             ),
-           );
+                   ],
+                 ),
+               ),
+             );
 
-         },
-         separatorBuilder: (context, index) => SizedBox(width: 20,)
+           },
+           separatorBuilder: (context, index) => SizedBox(width: 20,)
+       ),
      ),
    );
  }

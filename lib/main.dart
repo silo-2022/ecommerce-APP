@@ -26,6 +26,7 @@ home: Scaffold(
 
   body: ControlView(),
 ),
+      theme: ThemeData(fontFamily: "SourceSansPro"),
     );
   }
   
