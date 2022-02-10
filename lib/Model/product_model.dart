@@ -1,5 +1,10 @@
+import 'dart:ui';
+
+import 'package:ecom/Helper/extension.dart';
+
 class ProductModel{
-  String name, image, description, color, sized, price;
+  String name, image, description, sized, price;
+       Color color;
   ProductModel({
     this.name,
     this.image,
@@ -16,7 +21,7 @@ class ProductModel{
     name = map['name'];
     image = map['image'];
     description = map['description'];
-    color = map['color'];
+    color = HexColor.fromHex( map['color']);
     sized = map['sized'];
     price = map['price'];
   }

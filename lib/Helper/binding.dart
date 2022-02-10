@@ -1,3 +1,5 @@
+import 'package:ecom/Core/ViewModel/cart_view_model.dart';
+
 import '/Core/ViewModel/Home_View_model.dart';
 import 'package:get/get.dart';
 import '/Core/ViewModel/Auth_View_Model.dart';
@@ -11,6 +13,7 @@ class Binding extends Bindings{
     Get.lazyPut(() => AuthViewModel());
     Get.lazyPut(() => ControlViewModel());
     Get.lazyPut(() => HomeViewModel());
+    Get.lazyPut(() => CartViewModel());
 
   }
 

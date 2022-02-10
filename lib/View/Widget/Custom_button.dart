@@ -18,7 +18,7 @@ class CustomButton extends StatelessWidget {
       ),
       onPressed:onPressed,
       color: primeryColor,
-      child: CustomText(text: "SIGN IN",alignment: Alignment.center,color: Colors.white,),)
+      child: CustomText(text: this.text,alignment: Alignment.center,color: Colors.white,),)
     ;
   }
 

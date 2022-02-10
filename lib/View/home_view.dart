@@ -122,7 +122,7 @@ final List<String> names =<String>[ "s", "s","s","s","s"];
            scrollDirection: Axis.horizontal,
            itemBuilder: (context, index){
              return GestureDetector(
-               onTap:(){ Get.to(DetailView(
+               onTap:(){ Get.to(DetailsView(
                  model: controller.productModel[index],
                ));},
                child: Container(
