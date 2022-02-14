@@ -1,4 +1,6 @@
 
+import 'package:ecom/Helper/local_storage_data.dart';
+import 'package:ecom/View/control_view.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -15,6 +17,8 @@ class AuthViewModel extends GetxController{
   FirebaseAuth _auth = FirebaseAuth.instance;
   Rxn<User> _user = Rxn<User>( );
 String get user=> _user.value?.email;
+
+final LocalStorageData localStorageData = Get.find();
 String email, password , name ;
 
  var counter=0.obs;
@@ -28,6 +32,9 @@ print(counter);
 void onInit(){
 super.onInit();
 _user.bindStream(_auth.authStateChanges());
+if(_auth.currentUser !=null){
+getCurrentUserData(_auth.currentUser.uid);
+}
 }
 @override
   void onReady(){
@@ -50,8 +57,14 @@ void signINwithEmailpass() async {
 try{
 
 
- await _auth.signInWithEmailAndPassword(email: email, password: password);
-  Get.offAll(HomeView());
+ await _auth
+     .signInWithEmailAndPassword(email: email, password: password)
+     .then((value) async {
+getCurrentUserData(value.user.uid);
+
+
+ });
+  Get.offAll(ControlView());
 
 }catch(e){
   print(e.message);
@@ -71,7 +84,7 @@ try{
       });
 
 
-      Get.offAll(HomeView());
+      Get.offAll(ControlView());
 
     }catch(e){
       print(e.message);
@@ -81,17 +94,29 @@ try{
   }
 
 
-
+Future<void> getCurrentUserData(String uid) async {
+  await FireStoreUser().getCurrentUser(uid).then((value) {
+    SetUser(UserModel.fromJson(value.data()));
+  });
+}
 
   void SaveUserData(UserCredential user) async{
+UserModel userModel = UserModel(
+  UserID : user.user.uid,
+  email : user.user.email,
+  name: name,
+  pic : "",
+);
+await FireStoreUser().addUsertofirestore(userModel );
+SetUser(userModel);
+}
 
 
-    await FireStoreUser().addUsertofirestore( UserModel(
-      UserID : user.user.uid,
-      email : user.user.email,
-      name: name,
-      pic : "",
-    ));
-        }
+
+ void SetUser(UserModel userModel)async{
+  localStorageData.setUser(userModel);
+
+
+}
 
 }

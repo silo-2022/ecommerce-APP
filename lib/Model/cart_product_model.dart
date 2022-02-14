@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:ecom/Helper/extension.dart';
 
 class CartProductModel{
-  String name, image,  price;
+  String productID, name, image,  price;
   int quantity;
 
   CartProductModel({
@@ -11,7 +11,8 @@ class CartProductModel{
     this.image,
 
     this.price,
-    this.quantity
+    this.quantity,
+    this.productID
 
   });
   CartProductModel.fromJson(Map<dynamic, dynamic> map){
@@ -22,6 +23,7 @@ class CartProductModel{
     image = map['image'];
     price = map['price'];
     quantity = map['quantity'];
+    productID = map['productID'];
 
   }
 
@@ -32,6 +34,7 @@ class CartProductModel{
       'image': image,
       'price':price,
       'quantity':quantity,
+      'productID': productID
 
 
     };

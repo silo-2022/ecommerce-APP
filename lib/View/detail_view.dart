@@ -138,7 +138,7 @@ class DetailsView extends StatelessWidget {
                     ],
                   ),
                   GetBuilder<CartViewModel>(
-                    init: CartViewModel() ,
+                    init: Get.find() ,
 
                     builder:(controller)=> Container(
                       padding: EdgeInsets.all(20),
@@ -146,12 +146,14 @@ class DetailsView extends StatelessWidget {
                       height: 100,
                       child: CustomButton(
                         onPressed: () {
+                          print("*****");
                           controller.addProduct(
                             CartProductModel(
                               name:model.name,
                               image: model.image,
                               price: model.price,
-                              quantity: 1
+                              quantity: 1,
+                              productID: model.productID
 
                             )
 

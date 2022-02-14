@@ -8,3 +8,11 @@ final String columnName = 'name';
 final String columnImage = 'image';
 final String columnQuantity = 'quantity';
 final String columnPrice = 'price';
+final String columnProductID = 'productID';
+
+const CachedUserData = 'CachedUserData';
+
+const kTileHeight = 50.0;
+const inProgressColor = Colors.black87;
+const todoColor = Color(0xffd1d2d7);
+

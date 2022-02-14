@@ -1,5 +1,7 @@
 import 'package:ecom/Model/cart_product_model.dart';
-import 'package:ecom/View/Constant.dart';
+import 'package:ecom/Model/product_model.dart';
+import '/View/Constant.dart';
+
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -21,7 +23,8 @@ class CartDatabaseHelper{
       $columnName TEXT NOT NULL,
       $columnImage TEXT NOT NULL,
        $columnPrice TEXT NOT NULL,
-        $columnQuantity INTEGER NOT NULL)
+        $columnQuantity INTEGER NOT NULL,
+        $columnProductID TEXT NOT NULL)
       
       ''');
 
@@ -46,5 +49,14 @@ class CartDatabaseHelper{
         tableCartProduct,
         model.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+  updateProduct(CartProductModel model) async{
+    var dbClient = await database;
+    return await dbClient.update(tableCartProduct, model.toJson(),
+    where: '$columnProductID =?' , whereArgs: [model.productID]
+
+    );
+
+
   }
 }

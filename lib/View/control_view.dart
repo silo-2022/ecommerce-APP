@@ -20,6 +20,7 @@ class ControlView extends GetWidget<AuthViewModel>{
      return (Get.find<AuthViewModel>().user == null)
          ? LoginScreen()
          : GetBuilder<ControlViewModel>(
+       init: ControlViewModel(),
             builder: (controller)=>
          Scaffold(body: controller.CurrentScreen,
              bottomNavigationBar: bottomNavigationBar(),
@@ -32,7 +33,7 @@ class ControlView extends GetWidget<AuthViewModel>{
   }
   Widget bottomNavigationBar() {
     return GetBuilder<ControlViewModel>(
-      init: ControlViewModel(),
+init: Get.find(),
       builder: (controller)=>
           BottomNavigationBar(
             items:[

@@ -1,5 +1,7 @@
 import 'package:ecom/Core/ViewModel/cart_view_model.dart';
-import 'package:ecom/View/Constant.dart';
+import 'package:ecom/View/checkout/checkoutview.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import '/View/Constant.dart';
 import 'package:ecom/View/Widget/Custom_button.dart';
 import 'package:ecom/View/Widget/custom_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,14 +13,24 @@ class CartView extends StatelessWidget{
   Widget build(BuildContext context) {
 
     // TODO: implement build
-    return Scaffold(
+    return GetBuilder<CartViewModel>(
+        init: Get.find(),
+    builder:(controller) =>Scaffold(
 
-      body: Column(
+      body: controller.cartProductModel.length ==0
+          ?Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset('assets/cartempty.svg', width: 200, height: 200,),
+          SizedBox(height: 20,),
+          CustomText(text: "Cart Empty",fontsize: 32,alignment: Alignment.center,)
+        ],
+      ):Column(
         children: [
           Expanded(
-            child: GetBuilder<CartViewModel>(
-              init: CartViewModel(),
-              builder:(controller) =>Container(
+            child:
+
+                  Container(
                 child: ListView.separated(itemBuilder: (context, index){
                   return Container(
                     height: 140,
@@ -45,12 +57,22 @@ class CartView extends StatelessWidget{
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.add, color: Colors.black,),
+                                    GestureDetector(
+
+                                        child: Icon(Icons.add, color: Colors.black,),
+                                    onTap:(){ controller.increaseQuantity(index);},
+                                    
+                                    ),
                                     SizedBox(width: 10,),
-                                    CustomText(text: '1',alignment: Alignment.center,fontsize:20 ,color: Colors.black,),
+                                    CustomText(text: controller.cartProductModel[index].quantity.toString(),alignment: Alignment.center,fontsize:20 ,color: Colors.black,),
                                     Container(
                                      padding: EdgeInsets.only(bottom: 20),
-                                        child: Icon(Icons.minimize, color: Colors.black,)),
+                                        child: GestureDetector(
+                                          
+                                            child: Icon(Icons.minimize, color: Colors.black,),
+                                        
+                                        onTap: (){controller.decreaseQuantity(index);},
+                                        )),
                                     SizedBox(width: 10,),
 
                                   ],
@@ -68,7 +90,7 @@ class CartView extends StatelessWidget{
                 },)
 
               ),
-            ),
+
           ),
           Padding(
             padding: const EdgeInsets.only(left: 30, right: 30),
@@ -81,7 +103,10 @@ class CartView extends StatelessWidget{
                       text: 'TOTAL',fontsize: 22,color: Colors.grey,
                     ),
                     SizedBox(height: 15,),
-                    CustomText(text: '\$ 200',color: primeryColor,fontsize: 18,)
+                    GetBuilder<CartViewModel>(
+                      init: Get.find(),
+                        builder: (controller)=>
+                            CustomText(text: '\$ ${controller.totalPrice}',color: primeryColor,fontsize: 18,))
                   ],
                 ),
 
@@ -89,13 +114,15 @@ class CartView extends StatelessWidget{
                   padding: EdgeInsets.all(20),
                     height: 100,
                     width: 180,
-                    child: CustomButton(onPressed: (){},text: 'Checkout',))
+                    child: CustomButton(onPressed: (){
+                      Get.to(CheckOutView());
+                    },text: 'Checkout',))
               ],
             ),
           )
         ],
       ),
-
+    ),
     );
   }
   
