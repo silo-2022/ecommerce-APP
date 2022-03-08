@@ -1,5 +1,7 @@
 
 
+import 'package:ecom/Core/Services/product_categories_services.dart';
+import 'package:ecom/Core/ViewModel/category_view_model.dart';
 import 'package:ecom/View/detail_view.dart';
 
 import '/Core/ViewModel/Home_View_model.dart';
@@ -12,6 +14,7 @@ import '../View/Auth/login_screen.dart';
 import '../View/Constant.dart';
 import '../View/Prof_View.dart';
 import '../View/Widget/custom_text.dart';
+import 'category_products_view.dart';
 
 
 class HomeView extends StatelessWidget{
@@ -80,26 +83,39 @@ final List<String> names =<String>[ "s", "s","s","s","s"];
  }
  Widget _ListViewCategory(){
     return  GetBuilder<HomeViewModel>(
+
       builder:(controller)=> Container(
 
         height: 90,
         child: ListView.separated(
             itemCount: controller.categoryModel.length,
             scrollDirection: Axis.horizontal,
+
             itemBuilder: (context, index){
+              Map<String, String> parameters = {"id":"${controller.categoryModel[index].id}" ,"name":"${controller.categoryModel[index].name}"};
               return Column(
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: Colors.grey.shade100
-                    ),
-                    height: 60,
-                    width: 70,
-                    child:  Padding(
-                        padding: const EdgeInsets.all(8),
+                  GestureDetector(
+                    onTap:(){
+                      final CategoryViewModel controller2 = Get.put(CategoryViewModel());
+                      controller2.passParameters(controller.categoryModel[index].id.toString(), controller.categoryModel[index].name);
+              print("+++++++++++++++++");
+              Get.to(ProductsCategoryView(), );
+              print(parameters);
 
-                        child: Image.network(controller.categoryModel[index].image)),),
+                  },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: Colors.grey.shade100
+                      ),
+                      height: 60,
+                      width: 70,
+                      child:  Padding(
+                          padding: const EdgeInsets.all(8),
+
+                          child: Image.network('https://ecommerce.silohost.xyz/'+controller.categoryModel[index].image)),),
+                  ),
                   SizedBox(height: 10,),
                   CustomText(text: controller.categoryModel[index].name,)
                 ],
@@ -145,7 +161,7 @@ final List<String> names =<String>[ "s", "s","s","s","s"];
                              Container(
                                  width: MediaQuery.of(context).size.width*.4,
                                  height: 100,
-                                 child: Image.network(controller.productModel[index].image, fit: BoxFit.fill,)),
+                                 child: Image.network("https://ecommerce.silohost.xyz/"+controller.productModel[index].image, fit: BoxFit.fill,)),
                              Padding(
                                padding: const EdgeInsets.only(left: 8.0),
                                child: CustomText(text: controller.productModel[index].name, alignment: Alignment.bottomLeft,maxLine: 1,),

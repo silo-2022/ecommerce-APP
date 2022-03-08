@@ -38,6 +38,7 @@ dependencies:
   shared_preferences: ^2.0.13
   flutter_svg: ^1.0.3
   status_change: ^1.0.0
+  http: ^0.13.4
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,4 +1,5 @@
 import 'package:ecom/Core/ViewModel/cart_view_model.dart';
+import 'package:ecom/Core/ViewModel/category_view_model.dart';
 import 'package:ecom/Core/ViewModel/checkoutview_viewmodel.dart';
 import 'package:ecom/Helper/local_storage_data.dart';
 
@@ -18,6 +19,10 @@ class Binding extends Bindings{
     Get.lazyPut(() => CartViewModel());
     Get.lazyPut(() => LocalStorageData());
     Get.lazyPut(() => checkoutViewModel());
+    Get.lazyPut(() => CategoryViewModel());
+
+
+
 
   }
 

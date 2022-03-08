@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'Core/ViewModel/cart_view_model.dart';
 import 'Helper/binding.dart';
 import 'View/Auth/login_screen.dart';
+import 'View/category_products_view.dart';
 import 'View/control_view.dart';
 Future<void> main()  async {
   WidgetsFlutterBinding.ensureInitialized(
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget{
       initialBinding: Binding(),
 home: Scaffold(
 
-  body: ControlView(),
+  body:
+  ControlView(),
 ),
       theme: ThemeData(fontFamily: "SourceSansPro"),
     );

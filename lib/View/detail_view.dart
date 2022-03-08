@@ -25,7 +25,7 @@ class DetailsView extends StatelessWidget {
             Container(
               width: MediaQuery.of(context).size.width,
               height: 220,
-              child: Image.network(
+              child: Image.network("https://ecommerce.silohost.xyz/"+
                 model.image,
                 fit: BoxFit.fill,
               ),
@@ -46,7 +46,7 @@ class DetailsView extends StatelessWidget {
                       SizedBox(
                         height: 15,
                       ),
-                      Row(
+                    /*  Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Container(
@@ -63,9 +63,7 @@ class DetailsView extends StatelessWidget {
                                 CustomText(
                                   text: 'Size',
                                 ),
-                                CustomText(
-                                  text: model.sized,
-                                ),
+                                //CustomText(text: model.sized,),
                               ],
                             ),
                           ),
@@ -83,7 +81,7 @@ class DetailsView extends StatelessWidget {
                                 CustomText(
                                   text: 'Color',
                                 ),
-                                Container(
+                               /* Container(
                                   width: 30,
                                   height: 20,
                                   padding: EdgeInsets.all(12),
@@ -92,12 +90,12 @@ class DetailsView extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(20),
                                     color: model.color,
                                   ),
-                                )
+                                )*/
                               ],
                             ),
                           ),
                         ],
-                      ),
+                      ),*/
                       SizedBox(
                         height: 10,
                       ),
@@ -150,10 +148,10 @@ class DetailsView extends StatelessWidget {
                           controller.addProduct(
                             CartProductModel(
                               name:model.name,
-                              image: model.image,
+                              image: "https://ecommerce.silohost.xyz/"+model.image,
                               price: model.price,
                               quantity: 1,
-                              productID: model.productID
+                              productID: model.id.toString(),
 
                             )
 

@@ -12,12 +12,14 @@ import 'package:get/get.dart';
 class HomeViewModel extends GetxController {
   List<CategoryModel> get categoryModel => _categoryModel;
   List<CategoryModel> _categoryModel = [];
-
-  List<ProductModel> get productModel => _productModel ;
+  List<CategoryModel> categories = [];
+ List<ProductModel> get productModel => _productModel ;
   List<ProductModel> _productModel = [];
+  //var _productModel;
   ValueNotifier<bool> get loading => _loading;
   ValueNotifier<bool> _loading = ValueNotifier(false);
   Widget _CurrentScreen = HomeView();
+
   get CurrentScreen => _CurrentScreen;
 
   int _navigatorvalue = 0;
@@ -50,12 +52,23 @@ get navigatorvalue => _navigatorvalue;
     getCategory();
     getBestSellingProduct();
   }
-  getCategory() async{
+  getCategory() async {
+
+       HomeService().getCategories().then((value){
+
+          _categoryModel = value;
+
+
+      update();
+
+         });
+           }
+  /*getCategory() async{
 
     _loading.value=true;
    HomeService().getCategories().then((value){
       for(int i =0; i<value.length; i++){
-        _categoryModel.add(CategoryModel.fromJson(value[i].data()));
+        _categoryModel.add(value[i]);
         //print(_categoryModel.length);
        // print(_categoryModel[i].name);
         //print(_categoryModel[i].image);
@@ -63,18 +76,30 @@ get navigatorvalue => _navigatorvalue;
       }
       update();
     });
-  }
-  getBestSellingProduct() async{
+  }*/
+  /*getBestSellingProduct() async{
 _loading.value = true;
 HomeService().BestSellingProducts().then((value) {
   for(int i =0; i<value.length; i++) {
 _productModel.add(ProductModel.fromJson(value[i].data()));
-print(_productModel.length);
+//print(_productModel.length);
 _loading.value=false;
   }
   update();
   }
 );
 
+  }*/
+  getBestSellingProduct() async {
+
+    HomeService().BestSellingProducts().then((value){
+
+      _productModel = value;
+      print(_productModel);
+
+
+      update();
+
+    });
   }
 }
